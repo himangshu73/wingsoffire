@@ -38,38 +38,44 @@ export default function Home() {
     getAllProducts();
   }, []);
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-extrabold my-8">List of Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="container mx-auto px-4 py-10">
+      <h1 className="text-4xl font-extrabold mb-10 text-center">
+        List of Products
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product: Product) => (
           <div
             key={product.id}
-            className="p-4 border border-gray-300 shadow-lg rounded-lg overflow-hidden"
+            className="bg-white border border-gray-200 shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-6 rounded-2xl flex flex-col"
           >
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-4">
               <Image
                 src={product.thumbnail}
                 width={200}
                 height={200}
                 alt={product.title}
+                className="rounded-xl object-cover"
               />
             </div>
-            <div>
-              <Link href="" className="mb-2">
-                <h2 className="text-xl font-bold hover:text-blue-500">
+            <div className="flex-1">
+              <Link href="">
+                <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors mb-2">
                   {product.title}
                 </h2>
               </Link>
-              <p className="text-gray-400 text-sm mb-2">
+              <p className="text-gray-500 text-sm mb-3 line-clamp-2">
                 {product.description}
               </p>
-              <p className="font-bold mb-2">Price: ${product.price}</p>
-              <div className="flex justify-between">
-                <Button className="w-24 bg-blue-500 hover:bg-purple-500 hover:cursor-pointer">
-                  <TiShoppingCart className="text-white" />
+              <p className="text-lg  text-green-600 font-bold mb-4">
+                Price: ${product.price}
+              </p>
+              <div className="flex gap-4">
+                <Button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white">
+                  <TiShoppingCart className="mr-2 text-xl" />
+                  Add to Cart
                 </Button>
-                <Button className="w-24 bg-green-500 hover:bg-amber-500 hover:cursor-pointer">
-                  Buy
+                <Button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white">
+                  Buy Now
                 </Button>
               </div>
             </div>
