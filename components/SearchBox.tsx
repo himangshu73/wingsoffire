@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 
 export default function SearchBox() {
   return (
-    <form className="flex items-center gap-2 h-10 w-full">
+    <form className="flex items-center gap-2 h-10 max-w-[400px]">
       <input
         type="text"
         placeholder="Search..."
@@ -10,7 +10,7 @@ export default function SearchBox() {
       />
       <button
         type="submit"
-        className="h-full bg-blue-600 px-3 py-2 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+        className="h-full aspect-square bg-blue-600 px-3 py-1 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
       >
         <FaSearch />
       </button>
