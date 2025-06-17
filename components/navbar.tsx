@@ -19,8 +19,8 @@ export default function Navbar() {
           className="hidden md:block"
         />
         <h1 className="text-2xl md:hidden font-extrabold">
-          <span className="text-blue-700">Fire</span>
-          <span className="text-orange-700">Store</span>
+          <span className="text-blue-700">F</span>
+          <span className="text-orange-700">S</span>
         </h1>
       </Link>
       <div className="flex-1 px-4">
