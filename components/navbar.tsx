@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Navbar() {
   return (
-    <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+    <header className="flex items-center justify-between gap-2 px-3 py-2 bg-white shadow-md">
       <Link
         href="/"
         title="Go to homepage"
@@ -18,16 +18,16 @@ export default function Navbar() {
           alt="logo"
           className="hidden md:block"
         />
-        <h1 className="text-2xl md:hidden font-extrabold">
+        <h1 className="text-xl md:hidden font-extrabold">
           <span className="text-blue-700">F</span>
           <span className="text-orange-700">S</span>
         </h1>
       </Link>
-      <div className="flex-1 px-4">
+      <div className="flex-1 max-w-xs sm:max-w-sm">
         <SearchBox />
       </div>
 
-      <button className="text-2xl md:hidden" title="Menu">
+      <button className="text-2xl md:hidden ml-2" title="Menu">
         <GiHamburgerMenu />
       </button>
     </header>
