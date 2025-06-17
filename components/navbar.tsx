@@ -30,7 +30,7 @@ export default function Navbar() {
         </div>
         <div className="md:hidden flex flex-1 justify-center px-2">
           <form className="flex items-center gap-2">
-            <input type="text" placeholder="Search..." className="flex-1 border border-gray-500 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            <input type="text" placeholder="Search..." className="flex-1 border border-gray-500 px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[200px]"/>
             <button type="submit">
               <FaSearch />
             </button>
