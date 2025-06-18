@@ -5,32 +5,18 @@ import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
+  const router = useRouter();
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
     try {
-      const response = await axios.get(
-        `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`
-      );
-      console.log(response.data);
+      router.push(`/search?q=${encodeURIComponent(query)}`);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Search Error: ", error.message);
-        if (error.response) {
-          console.log(
-            "Response Error: ",
-            error.response.status || error.response.data
-          );
-        } else if (error.request) {
-          console.log("Request Error: ", error.request);
-        }
-      } else {
-        console.log("Unexpected Error: ", error);
-      }
+      console.log("Unexpected Error: ", error);
     }
   };
   return (
