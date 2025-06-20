@@ -1,7 +1,5 @@
-"use client";
-
 import { Product } from "@/types/product";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { useState } from "react";
@@ -68,14 +66,7 @@ export default async function SingleProductPage({
       </div>
     );
   } catch (error) {
-    if (error instanceof AxiosError) {
-      const errorMessage = error.response?.data?.message || error.message;
-      setError(errorMessage);
-      console.error(errorMessage);
-    } else {
-      setError("An unexpected error occurred");
-      console.error(error);
-    }
+    console.log(error);
     return notFound();
   }
 }
