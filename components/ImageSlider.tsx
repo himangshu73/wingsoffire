@@ -31,14 +31,16 @@ export default function ImageSlider({ products }: ImageSliderProps) {
     <div className="relative w-full max-w-4xl mx-auto">
       <div className="bg-white border border-gray-200 shadow-md hover:shadow-xl transition-all p-6 rounded-2xl flex flex-col items-center">
         <div className="mb-4 w-full flex justify-center">
-          <Image
-            src={currentProduct.images[0]}
-            width={600}
-            height={400}
-            alt={currentProduct.title}
-            className="rounded-xl object-cover max-h-80 w-auto"
-            priority
-          />
+          <Link href={`/products/${currentProduct.id}`}>
+            <Image
+              src={currentProduct.images[0]}
+              width={600}
+              height={400}
+              alt={currentProduct.title}
+              className="rounded-xl object-cover max-h-80 w-auto"
+              priority
+            />
+          </Link>
         </div>
         <div className="text-center">
           <Link href={`/products/${currentProduct.id}`}>
