@@ -2,7 +2,6 @@ import { Product } from "@/types/product";
 import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { useState } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 
 type Params = Promise<{ id: string }>;
@@ -12,8 +11,6 @@ export default async function SingleProductPage({
 }: {
   params: Params;
 }) {
-  const [error, setError] = useState<string | null>(null);
-
   try {
     const { id } = await params;
     const response = await axios.get(`https://dummyjson.com/products/${id}`);
