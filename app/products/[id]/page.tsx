@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/types/product";
 import axios, { AxiosError } from "axios";
 import Image from "next/image";
