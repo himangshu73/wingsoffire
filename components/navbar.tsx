@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const { data: session, status } = useSession();
   const user = session?.user;
@@ -87,28 +89,59 @@ export default function Navbar() {
             </button>
           </form>
         </div>
-        <p className="">Cart</p>
-        {status === "loading" ? null : user ? (
-          <>
-            <p>{user.name?.split(" ")[0]}</p>
-            <p className="hover:cursor-pointer" onClick={() => signOut()}>
-              Logout
+        <div className="hidden md:flex items-center gap-6">
+          <p className="">Cart</p>
+          {status === "loading" ? null : user ? (
+            <>
+              <p>{user.name?.split(" ")[0]}</p>
+              <p className="hover:cursor-pointer" onClick={() => signOut()}>
+                Logout
+              </p>
+            </>
+          ) : (
+            <p className="hover:cursor-pointer" onClick={() => signIn()}>
+              Login
             </p>
-          </>
-        ) : (
-          <p className="hover:cursor-pointer" onClick={() => signIn()}>
-            Login
-          </p>
-        )}
+          )}
+        </div>
 
         <button
           className="text-2xl md:hidden shrink-0"
           title="Menu"
           aria-label="Open Menu"
+          onClick={() => setMenuOpen(!menuOpen)}
         >
-          <GiHamburgerMenu />
+          {menuOpen ? <IoClose /> : <GiHamburgerMenu />}
         </button>
       </div>
+      {menuOpen && (
+        <ul className="absolute z-50 right-4 mt-2 w-40 rounded-xl shadow-lg bg-orange-200 p-3 space-y-2 text-center transition duration-300">
+          <li className="hover:bg-orange-300 px-4 py-2 rounded-lg cursor-pointer">
+            Cart
+          </li>
+
+          {status === "loading" ? null : user ? (
+            <>
+              <li className="hover:bg-orange-300 px-4 py-2 rounded-lg cursor-pointer">
+                {user.name?.split(" ")[0]}
+              </li>
+              <li
+                className="hover:bg-orange-300 px-4 py-2 rounded-lg cursor-pointer"
+                onClick={() => signOut()}
+              >
+                Logout
+              </li>
+            </>
+          ) : (
+            <li
+              className="hover:bg-orange-300 px-4 py-2 rounded-lg cursor-pointer"
+              onClick={() => signIn()}
+            >
+              Login
+            </li>
+          )}
+        </ul>
+      )}
     </header>
   );
 }
