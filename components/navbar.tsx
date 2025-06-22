@@ -6,10 +6,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const user = session?.user;
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -83,8 +87,19 @@ export default function Navbar() {
             </button>
           </form>
         </div>
-        <p className="hidden">Cart</p>
-        <p className="hidden">Login</p>
+        <p className="">Cart</p>
+        {status === "loading" ? null : user ? (
+          <>
+            <p>{user.name?.split(" ")[0]}</p>
+            <p className="hover:cursor-pointer" onClick={() => signOut()}>
+              Logout
+            </p>
+          </>
+        ) : (
+          <p className="hover:cursor-pointer" onClick={() => signIn()}>
+            Login
+          </p>
+        )}
 
         <button
           className="text-2xl md:hidden shrink-0"
