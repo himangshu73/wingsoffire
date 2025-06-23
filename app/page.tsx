@@ -20,7 +20,7 @@ export default function Home() {
       setLoading(true);
       setError(null);
       const response = await axios.get(
-        `https://dummyjson.com/products?limit=${limit}&$skip=${skip}`
+        `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
       );
       setProducts(response.data.products);
     } catch (error) {
@@ -37,6 +37,7 @@ export default function Home() {
     }
   }
   function loadMore() {
+    console.log(limit);
     setSkip((prev) => prev + limit);
     console.log(skip);
   }
