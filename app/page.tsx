@@ -12,12 +12,16 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const limit = 30;
+  const [skip, setSkip] = useState(0);
 
   async function getAllProducts() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get("https://dummyjson.com/products");
+      const response = await axios.get(
+        `https://dummyjson.com/products?limit=${limit}&$skip=${skip}`
+      );
       setProducts(response.data.products);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -32,11 +36,22 @@ export default function Home() {
       setLoading(false);
     }
   }
+  function loadMore() {
+    setSkip((prev) => prev + limit);
+    console.log(skip);
+  }
+
   useEffect(() => {
     getAllProducts();
   }, []);
 
-  if (loading) {
+  useEffect(() => {
+    if (skip > 0) {
+      getAllProducts();
+    }
+  }, [skip]);
+
+  if (loading && skip === 0) {
     return (
       <div className="container mx-auto px-4 py-10 min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -75,49 +90,59 @@ export default function Home() {
           <p className="text-xl text-gray-500">No products found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product: Product) => (
-            <div
-              key={product.id}
-              className="bg-white border border-gray-200 shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-6 rounded-2xl flex flex-col"
-            >
-              <div className="flex justify-center mb-4">
-                <Link href={`/products/${product.id}`}>
-                  <Image
-                    src={product.thumbnail}
-                    width={200}
-                    height={200}
-                    alt={product.title}
-                    className="rounded-xl object-cover"
-                    priority={products.indexOf(product) < 6}
-                  />
-                </Link>
-              </div>
-              <div className="flex-1">
-                <Link href={`/products/${product.id}`}>
-                  <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors mb-2">
-                    {product.title}
-                  </h2>
-                </Link>
-                <p className="text-gray-500 text-sm mb-3 line-clamp-2">
-                  {product.description}
-                </p>
-                <p className="text-lg  text-green-600 font-bold mb-4">
-                  Price: ${product.price}
-                </p>
-                <div className="flex gap-4">
-                  <Button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white">
-                    <TiShoppingCart className="mr-2 text-xl" />
-                    Add to Cart
-                  </Button>
-                  <Button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white">
-                    Buy Now
-                  </Button>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product: Product) => (
+              <div
+                key={product.id}
+                className="bg-white border border-gray-200 shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-6 rounded-2xl flex flex-col"
+              >
+                <div className="flex justify-center mb-4">
+                  <Link href={`/products/${product.id}`}>
+                    <Image
+                      src={product.thumbnail}
+                      width={200}
+                      height={200}
+                      alt={product.title}
+                      className="rounded-xl object-cover"
+                      priority={products.indexOf(product) < 6}
+                    />
+                  </Link>
+                </div>
+                <div className="flex-1">
+                  <Link href={`/products/${product.id}`}>
+                    <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors mb-2">
+                      {product.title}
+                    </h2>
+                  </Link>
+                  <p className="text-gray-500 text-sm mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <p className="text-lg  text-green-600 font-bold mb-4">
+                    Price: ${product.price}
+                  </p>
+                  <div className="flex gap-4">
+                    <Button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white">
+                      <TiShoppingCart className="mr-2 text-xl" />
+                      Add to Cart
+                    </Button>
+                    <Button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white">
+                      Buy Now
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+          <div className="text-center mt-4">
+            <button
+              onClick={() => loadMore()}
+              className="p-2 text-medium text-white bg-orange-500 hover:bg-orange-700 cursor-pointer rounded-lg transition duration-300"
+            >
+              Load More
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

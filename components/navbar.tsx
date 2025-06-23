@@ -90,6 +90,7 @@ export default function Navbar() {
           </form>
         </div>
         <div className="hidden md:flex items-center gap-6">
+          <p>Categories</p>
           <p className="">Cart</p>
           {status === "loading" ? null : user ? (
             <>
