@@ -32,7 +32,6 @@ function SearchResultContent() {
           const response = await axios.get(
             `https://dummyjson.com/products/search?q=${q}`
           );
-          console.log(response.data.products);
           setResults(response.data.products);
         }
       } catch (err) {
@@ -64,16 +63,18 @@ function SearchResultContent() {
               className="bg-white border border-gray-200 shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-6 rounded-2xl flex flex-col"
             >
               <div className="flex justify-center mb-4">
-                <Image
-                  src={product.thumbnail}
-                  width={200}
-                  height={200}
-                  alt={product.title}
-                  className="rounded-xl object-cover"
-                />
+                <Link href={`/products/${product.id}`}>
+                  <Image
+                    src={product.thumbnail}
+                    width={200}
+                    height={200}
+                    alt={product.title}
+                    className="rounded-xl object-cover"
+                  />
+                </Link>
               </div>
               <div className="flex-1">
-                <Link href="">
+                <Link href={`/products/${product.id}`}>
                   <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors mb-2">
                     {product.title}
                   </h2>

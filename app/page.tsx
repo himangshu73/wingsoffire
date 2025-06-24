@@ -14,15 +14,21 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const limit = 30;
   const [skip, setSkip] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  async function getAllProducts() {
+  async function getAllProducts(initialLoad = false) {
     try {
       setLoading(true);
       setError(null);
       const response = await axios.get(
         `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
       );
-      setProducts(response.data.products);
+      if (initialLoad) {
+        setProducts(response.data.products);
+      } else {
+        setProducts((prev) => [...prev, ...response.data.products]);
+      }
+      setTotal(response.data.total);
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessage = error.response?.data?.message || error.message;
@@ -37,13 +43,11 @@ export default function Home() {
     }
   }
   function loadMore() {
-    console.log(limit);
     setSkip((prev) => prev + limit);
-    console.log(skip);
   }
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts(true);
   }, []);
 
   useEffect(() => {
@@ -70,7 +74,7 @@ export default function Home() {
           <p className="text-xl font-semibold mb-4">Error loading products</p>
           <p className="mb-4">{error}</p>
           <Button
-            onClick={getAllProducts}
+            onClick={() => getAllProducts(true)}
             className="bg-blue-500 hover:bg-blue-700"
           >
             Retry
@@ -135,14 +139,17 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-4">
-            <button
-              onClick={() => loadMore()}
-              className="p-2 text-medium text-white bg-orange-500 hover:bg-orange-700 cursor-pointer rounded-lg transition duration-300"
-            >
-              Load More
-            </button>
-          </div>
+          {products.length < total && (
+            <div className="text-center mt-10">
+              <button
+                onClick={loadMore}
+                disabled={loading}
+                className="px-8 py-4 text-medium text-white text-lg bg-blue-600 hover:bg-blue-700 cursor-pointer rounded-lg transition duration-300"
+              >
+                {loading ? "Loading..." : "Load More"}
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>
