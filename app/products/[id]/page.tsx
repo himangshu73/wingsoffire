@@ -29,7 +29,8 @@ export default function SingleProductPage({ params }: { params: Params }) {
         }
         setProduct(response.data);
         setSelectedImage(response.data.images[0]);
-      } catch (err) {
+      } catch (error) {
+        console.log(`Error fetching product:`, error);
         setError(true);
       } finally {
         setLoading(false);
