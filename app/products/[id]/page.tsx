@@ -89,7 +89,7 @@ export default function SingleProductPage({ params }: { params: Params }) {
         </div>
 
         {/*Product Info Section*/}
-        <div className="lg:w-1/2 space-y-6">
+        <div className="lg:w-1/2">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {product.title}
@@ -164,89 +164,96 @@ export default function SingleProductPage({ params }: { params: Params }) {
               </div>
             </div>
           </div>
-
-          {/* Product Details Section */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold md-4">Product Details</h3>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li className="flex">
-                <span className="w-48 font-medium">Brand</span>
-                <span>{product.brand}</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Category</span>
-                <span className="capitalize">{product.category}</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">SKU</span>
-                <span>{product.sku}</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Weight</span>
-                <span>{product.weight} oz</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Dimensions</span>
-                <span>
-                  {product.dimensions?.width} × {product.dimensions?.height} ×{" "}
-                  {product.dimensions?.depth} mm
-                </span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Minimum Order</span>
-                <span>{product.minimumOrderQuantity} units</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Policy Section */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold mb-4">Policies</h3>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li className="flex">
-                <span className="w-48 font-medium">Warranty</span>
-                <span>{product.warrantyInformation}</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Shipping</span>
-                <span>{product.shippingInformation}</span>
-              </li>
-              <li className="flex">
-                <span className="w-48 font-medium">Returns</span>
-                <span>{product.returnPolicy}</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Reviews Section */}
-          {product.reviews && product.reviews.length > 0 && (
-            <div>
-              <h3>Customer Reviews</h3>
-              <div>
-                {product.reviews.map((review, index) => (
-                  <div key={index}>
-                    <div>
-                      <div>
-                        <p>{review.reviewerName}</p>
-                        <div>
-                          {[...Array(5)].map((_, i) => (
-                            <FaStar
-                              key={i}
-                              size={16}
-                              color={i < review.rating ? "gold" : "lightgray"}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <span>{new Date(review.date).toLocaleDateString()}</span>
-                    </div>
-                    <p>{review.comment}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
+      </div>
+
+      <div className="mt-8 space-y-6">
+        {/* Product Details Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Product Details</h3>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li className="flex">
+              <span className="w-48 font-medium">Brand</span>
+              <span>{product.brand}</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Category</span>
+              <span className="capitalize">{product.category}</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">SKU</span>
+              <span>{product.sku}</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Weight</span>
+              <span>{product.weight} oz</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Dimensions</span>
+              <span>
+                {product.dimensions?.width} × {product.dimensions?.height} ×{" "}
+                {product.dimensions?.depth} mm
+              </span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Minimum Order</span>
+              <span>{product.minimumOrderQuantity} units</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Policy Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-4">Policies</h3>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li className="flex">
+              <span className="w-48 font-medium">Warranty</span>
+              <span>{product.warrantyInformation}</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Shipping</span>
+              <span>{product.shippingInformation}</span>
+            </li>
+            <li className="flex">
+              <span className="w-48 font-medium">Returns</span>
+              <span>{product.returnPolicy}</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Reviews Section */}
+        {product.reviews && product.reviews.length > 0 && (
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold mb-4">Customer Reviews</h3>
+            <div className="space-y-6">
+              {product.reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="border-b border-gray-200 pb-4 last:border-0"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <p className="font-medium">{review.reviewerName}</p>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <FaStar
+                            key={i}
+                            size={16}
+                            color={i < review.rating ? "gold" : "lightgray"}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {new Date(review.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-gray-700">{review.comment}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
