@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 
 type Params = Promise<{ id: string }>;
 
@@ -15,6 +17,8 @@ export default function SingleProductPage({ params }: { params: Params }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -38,6 +42,15 @@ export default function SingleProductPage({ params }: { params: Params }) {
     };
     fetchProduct();
   }, [params]);
+
+  const handleAddCart = () => {
+    if (!product) return;
+
+    addToCart(product);
+    toast.success(`${product.title} added to cart!`, {
+      position: "bottom-right",
+    });
+  };
 
   if (loading) {
     return (
@@ -152,6 +165,7 @@ export default function SingleProductPage({ params }: { params: Params }) {
             <div className="border-t border-gray-200 pt-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
+                  onClick={handleAddCart}
                   className="flex-1 px-6 py-3 text-white font-medium bg-blue-600 hover:bg-blue-700 transition duration-200 rounded-lg flex items-center justify-center gap-2"
                   disabled={product.stock <= 0}
                 >
