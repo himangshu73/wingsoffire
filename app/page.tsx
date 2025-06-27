@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import { Product } from "@/types/product";
+import { useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,6 +17,15 @@ export default function Home() {
   const limit = 30;
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+    toast.success(`${product.title} added to cart!`, {
+      position: "bottom-right",
+    });
+  };
 
   async function getAllProducts(initialLoad = false) {
     try {
@@ -127,7 +138,10 @@ export default function Home() {
                     Price: ${product.price}
                   </p>
                   <div className="flex gap-4">
-                    <Button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white">
+                    <Button
+                      onClick={() => handleAddToCart(product)}
+                      className="flex-1 bg-blue-500 hover:bg-blue-700 text-white"
+                    >
                       <TiShoppingCart className="mr-2 text-xl" />
                       Add to Cart
                     </Button>
