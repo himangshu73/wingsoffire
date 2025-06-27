@@ -91,7 +91,7 @@ export default function Navbar() {
         </div>
         <div className="hidden md:flex items-center gap-6">
           <p>Categories</p>
-          <p className="">Cart</p>
+          <Link href="/cart">Cart</Link>
           {status === "loading" ? null : user ? (
             <>
               <p>{user.name?.split(" ")[0]}</p>
@@ -118,7 +118,7 @@ export default function Navbar() {
       {menuOpen && (
         <ul className="absolute z-50 right-4 mt-2 w-40 rounded-xl shadow-lg bg-orange-200 p-3 space-y-2 text-center transition duration-300">
           <li className="hover:bg-orange-300 px-4 py-2 rounded-lg cursor-pointer">
-            Cart
+            <Link href="/cart">Cart</Link>
           </li>
 
           {status === "loading" ? null : user ? (
