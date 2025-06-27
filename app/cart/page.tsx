@@ -104,6 +104,9 @@ export default function CartPage() {
             </div>
           ))}
         </div>
+        <div>
+          <button className="px-3 py-1">Checkout</button>
+        </div>
       </div>
     </div>
   );
