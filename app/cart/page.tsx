@@ -37,7 +37,7 @@ export default function CartPage() {
       <div className="container mx-auto px-4 py-10 max-w-6xl text-center">
         <h1 className="text-3xl font-bold mb-4">Your cart is Empty</h1>
         <p className="text-gray-600 mb-6">
-          Looks like you haven't added anything to your cart yet.
+          Looks like you have not added anything to your cart yet.
         </p>
         <Link
           href="/"
