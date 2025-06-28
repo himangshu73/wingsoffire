@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/options";
 import SessionProviderWrapper from "@/components/sessionProviderWrapper";
 import { Toaster } from "@/components/ui/sonner";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +32,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <SessionProviderWrapper session={session}>
           <Navbar />
-          {children}
+          <main className="flex-1">{children}</main>
+          <Footer />
         </SessionProviderWrapper>
         <Toaster />
       </body>
